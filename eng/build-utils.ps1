@@ -9,6 +9,25 @@ $ErrorActionPreference="Stop"
 
 $VSSetupDir = Join-Path $ArtifactsDir "VSSetup\$configuration"
 
+function Get-VersionCore([string]$name, [string]$versionFile) {
+    $name = $name.Replace(".", "")
+    $name = $name.Replace("-", "")
+    $nodeName = "$($name)Version"
+    $x = [xml](Get-Content -raw $versionFile)
+    $node = $x.SelectSingleNode("//Project/PropertyGroup/$nodeName")
+    if ($node -ne $null) {
+        return $node.InnerText
+    }
+
+    throw "Cannot find package $name in $versionFile"
+
+}
+
+# Return the version of the NuGet package as used in this repo
+function Get-PackageVersion([string]$name) {
+    return Get-VersionCore $name (Join-Path $EngRoot "Versions.props")
+}
+
 # Locate the directory where our NuGet packages will be deployed.  Needs to be kept in sync
 # with the logic in Version.props
 function Get-PackagesDir() {
