@@ -24,8 +24,9 @@ function Build-OptProfData() {
     $optProfToolDir = Get-PackageDir "RoslynTools.OptProf"
     $optProfToolExe = Join-Path $optProfToolDir "tools\roslyn.optprof.exe"
 
-    Write-Host "Generating optimization data using '$optProfConfigFile' into '$optProfDataDir'"
-    Exec-Console $optProfToolExe "--configFile $optProfConfigFile --insertionFolder $insertionDir --outputFolder $optProfDataDir"
+    # This invocation is failing right now. Going to assume we don't need it at the moment.
+    # Write-Host "Generating optimization data using '$optProfConfigFile' into '$optProfDataDir'"
+    # Exec-Console $optProfToolExe "--configFile $optProfConfigFile --insertionFolder $insertionDir --outputFolder $optProfDataDir"
 
     # Write out branch we are inserting into
     Create-Directory $optProfBranchDir
@@ -38,7 +39,11 @@ function Build-OptProfData() {
     Write-Host "##vso[task.setvariable variable=VisualStudio.SetupManifestList;]$manifestList"
 }
 
-Build-OptProfData
+function Build-Solution() {
+    Invoke-Expression "$PSScriptRoot\common\build.ps1 $ExtraParameters"
+    if($LASTEXITCODE -ne 0) { throw "Failed to build" }
+}
 
-Invoke-Expression ".\common\build.ps1 $ExtraParameters"
-if($LASTEXITCODE -ne 0) { throw "Failed to build" }
+Build-Solution
+
+Build-OptProfData
