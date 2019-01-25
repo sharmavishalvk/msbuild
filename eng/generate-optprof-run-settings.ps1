@@ -19,6 +19,9 @@ try {
 
   Write-Host "optProfToolExe = $optProfToolExe"
 
+  $Dir = get-childitem $optProfToolDir -recurse
+  $Dir | format-table name
+
   $configFile = Join-Path $EngRoot "config\OptProf.json"
   $runSettingsFile = Join-Path $VSSetupDir "Insertion\RunSettings\MSBuildOptProf.runsettings"
 
