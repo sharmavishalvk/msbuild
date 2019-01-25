@@ -78,27 +78,6 @@ jobs:
       ArtifactName: logs
     condition: succeededOrFailed()
 
-  - task: PublishBuildArtifacts@1
-    displayName: 'Publish Artifact: packages'
-    inputs:
-      PathtoPublish: 'artifacts\packages\Release'
-      ArtifactName: packages
-    condition: succeededOrFailed()
-
-  - task: PublishBuildArtifacts@1
-    displayName: 'Publish Artifact: vsix'
-    inputs:
-      PathtoPublish: 'artifacts\VSSetup\Release\Insertion'
-      ArtifactName: vsix
-    condition: succeededOrFailed()
-
-  - task: PublishBuildArtifacts@1
-    displayName: 'Publish Artifact: bin'
-    inputs:
-      PathtoPublish: 'artifacts\bin'
-      ArtifactName: bin
-    condition: succeededOrFailed()
-
   # Build VS bootstrapper
   # Generates $(Build.StagingDirectory)\MicroBuild\Output\BootstrapperInfo.json
   - task: ms-vseng.MicroBuildTasks.0e9d0d4d-71ec-4e4e-ae40-db9896f1ae74.MicroBuildBuildVSBootstrapper@2
@@ -138,6 +117,27 @@ jobs:
       ArtifactType: Container
     displayName: 'OptProf - Publish Artifact: BranchInfo'
     condition: succeeded()
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: packages'
+    inputs:
+      PathtoPublish: 'artifacts\packages\Release'
+      ArtifactName: packages
+    condition: succeededOrFailed()
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: vsix'
+    inputs:
+      PathtoPublish: 'artifacts\VSSetup\Release\Insertion'
+      ArtifactName: vsix
+    condition: succeededOrFailed()
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: bin'
+    inputs:
+      PathtoPublish: 'artifacts\bin'
+      ArtifactName: bin
+    condition: succeededOrFailed()
 
   - task: ms-vseng.MicroBuildTasks.4305a8de-ba66-4d8b-b2d1-0dc4ecbbf5e8.MicroBuildUploadVstsDropFolder@1
     displayName: Upload VSTS Drop
