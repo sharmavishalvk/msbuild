@@ -12,7 +12,13 @@ $ErrorActionPreference = "Stop"
     
 try {    
   $optProfToolDir = Get-PackageDir "Roslyn.OptProf.RunSettings.Generator"
+
+  Write-Host "OptProfToolDir = $optProfToolDir"
+
   $optProfToolExe = Join-Path $optProfToolDir "tools\roslyn.optprof.runsettings.generator.exe"
+
+  Write-Host "optProfToolExe = $optProfToolExe"
+
   $configFile = Join-Path $EngRoot "config\OptProf.json"
   $runSettingsFile = Join-Path $VSSetupDir "Insertion\RunSettings\MSBuildOptProf.runsettings"
 
