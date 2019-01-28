@@ -163,7 +163,16 @@ try {
 
   Build
 
+  Write-Host "After build"
+  $optProfToolDir = Get-PackageDir "Roslyn.OptProf.RunSettings.Generator"
+  $Dir = get-childitem $optProfToolDir -recurse
+  $Dir | format-table name
+
   Build-OptProfData
+
+  Write-Host "After doing the OptProfData step"
+  $Dir = get-childitem $optProfToolDir -recurse
+  $Dir | format-table name
 }
 catch {
   Write-Host $_
