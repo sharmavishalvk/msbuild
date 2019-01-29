@@ -84,7 +84,7 @@ function InitializeCustomToolset {
   }
 }
 
-function Build {
+function Build-Repo() {
   $toolsetBuildProj = InitializeToolset
   InitializeCustomToolset
   $bl = if ($binaryLog) { "/bl:" + (Join-Path $LogDir "Build.binlog") } else { "" }
@@ -161,18 +161,9 @@ try {
     . $configureToolsetScript
   }
 
-  Build
-
-  Write-Host "After build"
-  $optProfToolDir = Get-PackageDir "Roslyn.OptProf.RunSettings.Generator"
-  $Dir = get-childitem $optProfToolDir -recurse
-  $Dir | format-table name
+  Build-Repo
 
   Build-OptProfData
-
-  Write-Host "After doing the OptProfData step"
-  $Dir = get-childitem $optProfToolDir -recurse
-  $Dir | format-table name
 }
 catch {
   Write-Host $_
