@@ -1,4 +1,18 @@
 {
+  "products": [
+    {
+      "name": "Microsoft.Build.vsix",
+      "tests": [
+        {
+          "container": "DDRIT.RPS.CSharp",
+          "testCases": [
+            "DDRIT.RPS.CSharp.CSharpTest.EditingAndDesigner",
+            "DDRIT.RPS.CSharp.CSharpTest.BuildAndDebugging"
+          ]
+        }
+      ]
+    }
+  ],
   "assemblies": [
     {
       "assembly": "Microsoft.Build.Conversion.Core.dll",

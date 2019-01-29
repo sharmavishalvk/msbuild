@@ -129,8 +129,8 @@ function Build-OptProfData() {
     $optProfToolExe = Join-Path $optProfToolDir "tools\roslyn.optprof.exe"
 
     # This invocation is failing right now. Going to assume we don't need it at the moment.
-    # Write-Host "Generating optimization data using '$optProfConfigFile' into '$optProfDataDir'"
-    # Exec-Console $optProfToolExe "--configFile $optProfConfigFile --insertionFolder $insertionDir --outputFolder $optProfDataDir"
+    Write-Host "Generating optimization data using '$optProfConfigFile' into '$optProfDataDir'"
+    Exec-Console $optProfToolExe "--configFile $optProfConfigFile --insertionFolder $insertionDir --outputFolder $optProfDataDir"
 
     # Write out branch we are inserting into
     Create-Directory $optProfBranchDir

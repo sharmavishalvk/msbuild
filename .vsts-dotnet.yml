@@ -52,12 +52,16 @@ jobs:
     displayName: Build
     condition: succeeded()
 
-  - task: PublishBuildArtifacts@1
-    displayName: 'Publish Artifact: logs'
+  # Publish OptProf configuration files
+  - task: ms-vscs-artifact.build-tasks.artifactDropTask-1.artifactDropTask@0
     inputs:
-      PathtoPublish: 'artifacts\log\Release'
-      ArtifactName: logs
-    condition: succeededOrFailed()
+      dropServiceURI: 'https://devdiv.artifacts.visualstudio.com'
+      buildNumber: 'ProfilingInputs/DevDiv/$(Build.Repository.Name)/$(Build.SourceBranchName)/$(Build.BuildNumber)'
+      sourcePath: '$(Build.SourcesDirectory)\artifacts\OptProf\$(BuildConfiguration)\Data'
+      toLowerCase: false
+      usePat: false
+    displayName: 'OptProf - Publish to Artifact Services - ProfilingInputs'
+    condition: succeeded()
 
   # Build VS bootstrapper
   # Generates $(Build.StagingDirectory)\MicroBuild\Output\BootstrapperInfo.json
@@ -100,6 +104,13 @@ jobs:
     condition: succeeded()
 
   - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: logs'
+    inputs:
+      PathtoPublish: 'artifacts\log\Release'
+      ArtifactName: logs
+    condition: succeededOrFailed()
+
+  - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact: packages'
     inputs:
       PathtoPublish: 'artifacts\packages\Release'
@@ -123,6 +134,7 @@ jobs:
   - task: ms-vseng.MicroBuildTasks.4305a8de-ba66-4d8b-b2d1-0dc4ecbbf5e8.MicroBuildUploadVstsDropFolder@1
     displayName: Upload VSTS Drop
     inputs:
+      DropName: $(VisualStudio.DropName)
       DropFolder: 'artifacts\VSSetup\Release\Insertion'
     condition: succeeded()
 
