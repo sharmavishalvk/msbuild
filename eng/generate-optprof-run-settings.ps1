@@ -9,8 +9,18 @@ Set-StrictMode -version 2.0
 $ErrorActionPreference = "Stop"
 
 . (Join-Path $PSScriptRoot "build-utils.ps1")
-    
+
+function Restore-Repo() {
+  $toolsetBuildProj = InitializeToolset
+
+  MSBuild $toolsetBuildProj `
+    /p:RepoRoot=$RepoRoot `
+    /p:Restore=$true `
+}
+
 try {    
+  Restore-Repo
+
   $optProfToolDir = Get-PackageDir "Roslyn.OptProf.RunSettings.Generator"
 
   $optProfToolExe = Join-Path $optProfToolDir "tools\roslyn.optprof.runsettings.generator.exe"

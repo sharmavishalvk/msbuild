@@ -163,20 +163,7 @@ try {
 
   Build-Repo
 
-  # This is a HACK. Without this, the generate optprof runsettings later on
-  # was failing. I am not sure why.
-  Write-Host "After build"
-  $optProfToolDir = Get-PackageDir "Roslyn.OptProf.RunSettings.Generator"
-  $Dir = get-childitem $optProfToolDir -recurse
-  $Dir | format-table name
-
   Build-OptProfData
-
-  # This is a HACK. Without this, the generate optprof runsettings later on
-  # was failing. I am not sure why.
-  Write-Host "After doing the OptProfData step"
-  $Dir = get-childitem $optProfToolDir -recurse
-  $Dir | format-table name
 }
 catch {
   Write-Host $_
